@@ -12,9 +12,9 @@ router.post('/task/create', auth, async (req, res)=>{
             'owner':req.user._id
         });
         await task.save();
-        return res.status(201).send(task);
+        return res.status(201).send({success:true, data:task});
     } catch(e){
-        res.status(400).send({message:e.message});
+        res.status(400).send({success:false, error:e.message});
     }
 });
 

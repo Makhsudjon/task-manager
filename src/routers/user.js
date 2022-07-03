@@ -60,7 +60,7 @@ router.post('/user/logoutAll', auth, async (req, res) => {
 });
 
 router.get('/user/profile', auth, async (req, res) => {
-    res.send(req.user);
+    res.send({success:true, data:req.user});
 });
 
 
@@ -88,19 +88,6 @@ router.get('/users', auth, async (req, res) => {
     }
 });
 
-// router.get('/users/:id', auth, async (req, res) => {
-//     try {
-//         const id = req.params.id;
-//         const user = await User.findById(id);
-//         if(!user){
-//            return res.status(400).send({_id: id, message:'User not found'});
-//         }
-//         return res.send(user);
-//     } catch (e) {
-//         res.status(500).send({message:e.message});
-//     }
-// });
-
 router.patch('/user/me', auth, async (req, res)=>{
     const user = req.user;
     const data = req.body;
@@ -110,7 +97,7 @@ router.patch('/user/me', auth, async (req, res)=>{
     const is = updates.every(update=>allowedUpdates.includes(update));
 
     if(!is){
-        return res.status(400).send({id: user._id, message:'Invalid update properties'});
+        return res.status(400).send({success:false, message:'Invalid update properties'});
     }
 
     if(data.password){
