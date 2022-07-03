@@ -74,8 +74,7 @@ router.post('/user/create', async (req, res) => {
         await user.save();
         return res.status(201).send({success:true, data:user, token});
     } catch (e) {
-        console.log(e);
-        res.status(400).send(e);
+        res.status(400).send({success:false, error:e.message});
     }
 });
 
